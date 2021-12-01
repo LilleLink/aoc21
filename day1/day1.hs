@@ -7,11 +7,8 @@ main = do
 
 main2 :: IO ()
 main2 = do
-    contents <- map (\x -> read x :: Int) . lines <$> readFile "input.txt"
-    let contents2 = drop 1 contents
-    let windowed = toWindows contents
-    let windowed2 = toWindows contents2
-    let zipped = map fromEnum (zipWith (<) windowed windowed2)
+    c1 <- toWindows . map (\x -> read x :: Int) . lines <$> readFile "input.txt"
+    let zipped = map fromEnum (zipWith (<) c1 (drop 1 c1))
     print (sum zipped)
 
 toWindows :: [Int] -> [Int]

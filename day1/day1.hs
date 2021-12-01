@@ -3,14 +3,12 @@
 main :: IO ()
 main = do
     contents <- map (\x -> read x :: Int) . lines <$> readFile "input.txt"
-    let zipped = map fromEnum (zipWith (<) contents (drop 1 contents))
-    print (sum zipped)
+    print $ sum $ map fromEnum (zipWith (<) contents (drop 1 contents))
 
 main2 :: IO ()
 main2 = do
     c1 <- toWindows . map (\x -> read x :: Int) . lines <$> readFile "input.txt"
-    let zipped = map fromEnum (zipWith (<) c1 (drop 1 c1))
-    print (sum zipped)
+    print $ sum $ map fromEnum (zipWith (<) c1 (drop 1 c1))
 
 toWindows :: [Int] -> [Int]
 toWindows []         = []

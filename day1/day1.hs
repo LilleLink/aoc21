@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -Wno-incomplete-patterns #-}
 
 main :: IO ()
 main = do
@@ -12,5 +13,6 @@ main2 = do
     print (sum zipped)
 
 toWindows :: [Int] -> [Int]
+toWindows []         = []
 toWindows (x:y:z:[]) = [x+y+z]
-toWindows (x:y:z:xs) = (x+y+z):[] ++ toWindows (y:z:xs)
+toWindows (x:y:z:xs) = (x+y+z) : toWindows (y:z:xs)

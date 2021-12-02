@@ -5,16 +5,31 @@ aim = 0;
 f = open("input.txt");
 content = f.read().splitlines();
 
+# Part B
 for line in content :
-    splitted = line.split(' ');
-    print(splitted);
-    if splitted[0] == "forward":
-        horizontal += int(splitted[1]);
-        depth += aim * int(splitted[1]);
-    elif splitted[0] == "up":
-        aim -= int(splitted[1]);
-    elif splitted[0] == "down":
-        aim += int(splitted[1]);
-    
+    line = line.split(' ');
+    instruction = line[0];
+    value = line[1];
+    if instruction == "forward":
+        horizontal += int(value);
+        depth += aim * int(value);
+    elif instruction == "up":
+        aim -= int(value);
+    elif instruction == "down":
+        aim += int(value);
+
+''' 
+Part A
+for line in content :
+    line = line.split(' ');
+    instruction = line[0];
+    value = line[1];
+    if instruction == "forward":
+        horizontal += int(value);
+    elif instruction == "up":
+        depth -= int(value);
+    elif instruction == "down":
+        depth += int(value);
+'''
 
 print(horizontal*depth);

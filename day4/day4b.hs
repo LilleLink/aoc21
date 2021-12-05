@@ -8,8 +8,8 @@ main = do
     let draws     = zip (map (\b -> nrOfDrawsToWin b (transpose b) instructions) boards) boards
     let minDraws  = getMaxDraws (map fst draws)
     let draws     = fst minDraws
-    let minboard  = take 5 $ map snd (snd minDraws)
-    let unmarked  = filter (\s -> s `notElem` take draws instructions) (concat minboard)
+    let maxboard  = take 5 $ map snd (snd minDraws)
+    let unmarked  = filter (\s -> s `notElem` take draws instructions) (concat maxboard)
     print $ sum unmarked * last (take draws instructions)
 
 segments :: (a -> Bool) -> [a] -> [[a]]

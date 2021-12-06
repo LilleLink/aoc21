@@ -1,11 +1,8 @@
 module Main where
+import Data.List.Split
 
 main :: IO ()
 main = do
-    contents <- lines <$> readFile "input.txt"
-    let new = map (segments (/='>')) contents
-    print new
+    contents <- map (map (map (\s -> read s :: Int))) . map (map $ splitOn ",") . map (splitOn " -> ") . lines <$> readFile "input.txt"
+    print contents
 
-segments :: (a -> Bool) -> [a] -> [[a]]
-segments _ [] = []
-segments p xs = takeWhile p xs : segments p (drop 1 $ dropWhile p xs)

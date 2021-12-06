@@ -4,25 +4,15 @@ type Fish = Int
 
 main :: IO ()
 main = do
-    fishes <- map (\s -> read s :: Fish) . segments (/=',') <$> readFile "input.txt"
+    content <- map (\s -> read s :: Fish) . segments (/=',') <$> readFile "input.txt"
     putStr "Enter number of simulation days > "
     n <- (\s -> read s :: Int) <$> getLine
-    let afterndays = iterate simulateDay fishes !! n
-    print $ length afterndays
+    let fishes = map (\s -> length $ filter (==s) content) [0..8]
+    print $ sum $ iterate simulateDay fishes !! n
 
 simulateDay :: [Fish] -> [Fish]
-simulateDay fishes = incrementFishes fishes ++ newFishes
-    where newFishes = replicate (countNewFishes fishes) 8
-
-incrementFishes:: [Fish] -> [Fish]
-incrementFishes = map incrementFish
-    where
-        incrementFish :: Fish -> Fish
-        incrementFish fish | fish == 0 = 6
-                           | otherwise = fish-1
-
-countNewFishes :: [Fish] -> Int
-countNewFishes fishes = length $ filter (==0) fishes
+simulateDay []            = []
+simulateDay fishes@(f:fs) = take 5 fs ++ [fs !! 5] ++ [fs !! 6 + f] ++ [fs !! 7] ++ [f] 
 
 segments :: (a -> Bool) -> [a] -> [[a]]
 segments _ [] = []

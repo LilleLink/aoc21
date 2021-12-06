@@ -6,10 +6,8 @@ type Fish = Int
 main :: IO ()
 main = do
     content <- map (\s -> read s :: Fish) . splitOn "," <$> readFile "input.txt"
-    putStr "Enter number of simulation days > "
-    n <- (\s -> read s :: Int) <$> getLine
     let fishes = map (\s -> length $ filter (==s) content) [0..8]
-    print $ sum $ iterate simulateDay fishes !! n
+    print $ sum $ iterate simulateDay fishes !! 256
 
 simulateDay :: [Fish] -> [Fish]
 simulateDay []            = []

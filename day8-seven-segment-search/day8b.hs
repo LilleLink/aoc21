@@ -20,13 +20,30 @@ import Data.List.Split (splitOn)
 -- middle and top left - chars that exist in 4 but not in 7 except the top segment
 
 -- this is all we can deduce from the digits with unique segment lengths
-
 -- all of these in union form the 9
+
+-- Example
+-- be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb
+--  dddd
+--      e
+-- c?   e
+--      e
+--   g?
+--      b
+-- f?   b
+--      b
+--   a?
+
+-- be       = 1
+-- cgeb     = 4
+-- edb      = 7
+-- cfbegad  = 8
+
 
 main :: IO ()
 main = do
     contents <- map (map words . splitOn " | ") . lines <$> readFile "input.txt"
     let outputs = [last x | x <- contents]
-    let inputs  = [head x | x <- contents]
     let uniquelengths = [2,3,4,7]
-    print inputs
+    let lengths = length $ concatMap (filter (`elem` uniquelengths) . map length) outputs
+    print lengths

@@ -7,7 +7,7 @@ main = do
     contents <- lines <$> readFile "input.txt"
     let new = map (getCorruptedCharacter stackNew) contents
     let scores = map charToScore new
-    print $ sum scores
+    print new
 
 getCorruptedCharacter :: Stack Char -> String -> Char
 getCorruptedCharacter stack []     = ' '

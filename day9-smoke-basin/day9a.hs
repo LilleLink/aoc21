@@ -5,12 +5,12 @@ type Point = (Int, Int)
 
 main :: IO ()
 main = do
-    contents <- map (map (read :: String -> Int) . ((\(c:cs) -> cs) . splitOn "")) . lines <$> readFile "input.txt"
+    contents <- map (map (read :: String -> Int) . ((\(c:cs) -> cs) . splitOn "")) . lines <$> readFile "example.txt"
     let points = [(x,y) | x <- [0..length contents - 1], y <- [0..length (head contents) - 1]]  
     let appliedfunc = map (\(x,y) -> if isLowerThanAll (contents !! x !! y) (neighbors (x,y) contents) then contents !! x !! y else -1) points
     let lowpoints = filter (>=0) appliedfunc
     let score = sum $ map (+1) lowpoints
-    print score
+    print lowpoints
 
 neighbors :: Point -> [[Int]] -> [Int]
 neighbors (x,y) ps = map (\(x,y) -> ps !! x !! y) points

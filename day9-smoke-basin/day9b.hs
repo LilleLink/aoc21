@@ -11,10 +11,14 @@ main = do
     contents <- map (map (read :: String -> Int) .
                 ((\(c:cs) -> cs) . splitOn ""))  .
                 lines <$> readFile "input.txt"
+
     let points = [(x,y) | x <- [0..length contents - 1],
                           y <- [0..length (head contents) - 1]]
+
     let lowpoints = filter (isLowpoint contents) points
+
     let basins = map (getBasin contents) lowpoints
+    
     print $ product . take 3 . reverse . sort $ map length basins
 
 getBasin :: [[Int]] -> Point -> Basin
@@ -24,12 +28,8 @@ getBasin pmap point = basin [point] []
         basin []     visited = visited
         basin (p:ps) visited = basin (ps ++ [nb | nb <- immediateNeighbors pmap p, nb `notElem` (visited++ps), valueOf pmap nb /= 9]) (p:visited)  
             
-
 isLowpoint :: [[Int]] -> Point -> Bool
 isLowpoint pmap (x,y) = all (>pmap !! x !! y) (neighbors pmap (x,y))
-
-pointsToValue :: [[Int]] -> [Point] -> [Int]
-pointsToValue pmap points = [pmap !! x !! y | (x,y) <- points]
 
 valueOf :: [[Int]] -> Point -> Int
 valueOf pmap (x,y) = pmap !! x !! y
